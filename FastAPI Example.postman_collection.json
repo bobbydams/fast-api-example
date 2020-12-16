@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "e6f323ce-cbde-4465-adb0-91352e0e209c",
-		"name": "Flask Example",
+		"name": "FastAPI Example",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [

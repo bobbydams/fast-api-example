@@ -1,6 +1,6 @@
-# Flask Example API
+# FastAPI Example API
 
-This Flask API example implements basic principles of Domain Driven Design and
+This FastAPI example implements basic principles of Domain Driven Design and
 allows for various backend adapters to be used to persist data.
 
 # Prerequisites
@@ -8,18 +8,18 @@ allows for various backend adapters to be used to persist data.
 This application recommends using:
 
 - [Python v3.8](https://www.python.org/downloads/release/python-380/)
-- [Pipenv](https://pypi.org/project/pipenv/)
+- [Poetry](https://pypi.org/project/poetry/)
 
 # Installation
 
 To install this project in a development environment, run the following command.
 
 ```
-pipenv install --dev
-pipenv shell
+poetry install
+poetry shell
 ```
 
-If Pipenv is not available, install using the `requirements.txt` included in this project.
+If Poetry is not available, install using the `requirements.txt` included in this project.
 
 ```
 pip install -r requirements.txt
@@ -30,7 +30,7 @@ pip install -r requirements.txt
 To run the application in a development environment, run the following command.
 
 ```
-export FLASK_ENV=development; flask run
+uvicorn apps.api.app:app --reload
 ```
 
 In addition, a Docker compose file is available to run the application in a Docker container.
@@ -42,14 +42,14 @@ host machine. Note: The demo application mentioned below will not be served via 
 docker-compose up --build
 ```
 
-Then navigate to http://localhost:5000
+Then navigate to http://localhost:8000
 
 # Authentication
 
 To authenticate with application, use username `test` and password `test` by
 posting them to the following URL:
 
-http://localhost:5000/login
+http://localhost:8000/login
 
 ```
 {
@@ -66,11 +66,11 @@ should be included in the `Authorization` header as a bearer token.
 A demo application can be accessed with the following URL. This application will
 demonstrate the use of the get and add methods on the book resource.
 
-http://localhost:5000/demo/books
+http://localhost:8000/demo/books
 
 # API Documentation
 
-When serving the development server, go to http://localhost:5000/apidocs to
+When serving the development server, go to http://localhost:8000/apidocs to
 view OpenAPI documentation. This will include documentation about each endpoint
 and examples.
 
@@ -79,7 +79,7 @@ and examples.
 This project also includes a [Postman](https://www.postman.com/downloads/) collection
 for testing individual endpoints available with this API project.
 
-Import the file `Flask Example.postman_collection.json` into your Postman application.
+Import the file `Fast API Example.postman_collection.json` into your Postman application.
 
 # Testing
 

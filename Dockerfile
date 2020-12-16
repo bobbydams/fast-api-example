@@ -1,19 +1,18 @@
 FROM python:3.8-slim
 
-COPY . /code
 WORKDIR /code
+COPY poetry.lock pyproject.toml /code/
 
 RUN apt-get clean \
-  && apt-get -y update
-
-RUN apt-get -y install nginx \
+  && apt-get -y update \
   && apt-get -y install python3-dev \
-  && apt-get -y install build-essential
+  && apt-get -y install build-essential \
+  && pip install pip --upgrade \
+  && pip install poetry \
+  && poetry config virtualenvs.create false \
+  && poetry install --no-dev --no-interaction --no-ansi
 
-RUN pip install pip --upgrade
-RUN pip install pipenv
-RUN pipenv install --system
+COPY . /code
 
-COPY ./var/nginx.conf /etc/nginx
-RUN chmod +x ./var/start.sh
-CMD ["./var/start.sh"]
+EXPOSE 8000
+CMD ["python", "-m", "uvicorn", "apps.api.app:app"]
