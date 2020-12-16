@@ -1,0 +1,42 @@
+Update a single Book endpoint
+---
+tags:
+  - books
+definitions:
+  BookSchema:
+    type: object
+    required:
+      - title
+      - author
+      - pages
+      - publisher
+    properties:
+      title:
+        type: string
+      author:
+        type: string
+      pages:
+        type: integer
+      publisher:
+        type: string
+  SuccessSchema:
+    type: object
+    properties:
+      success:
+        type: boolean
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        $ref: '#/definitions/BookSchema'
+responses:
+  200:
+    description: A book matching the specified title
+    content:
+      application/json:
+        schema:
+          $ref: '#/definitions/SuccessSchema'
+    examples:
+      - {"success": True}

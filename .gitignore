@@ -1,0 +1,4 @@
+.db/app.db
+.coverage
+.vscode
+*.pyc

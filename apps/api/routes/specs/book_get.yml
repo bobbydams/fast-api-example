@@ -1,0 +1,46 @@
+Get a single Book endpoint
+---
+tags:
+  - books
+parameters:
+  - name: title
+    in: path
+    required: true
+    schema:
+      type: string
+definitions:
+  BookSchema:
+    type: object
+    properties:
+      title:
+        type: string
+      author:
+        type: string
+      pages:
+        type: integer
+      publisher:
+        type: string
+  BookNotFound:
+    type: object
+    properties:
+      code:
+        type: string
+        example: BOOK_NOT_FOUND
+      message:
+        type: string
+        example: "Book not found"
+responses:
+  200:
+    description: A book matching the specified title
+    content:
+      application/json:
+        schema:
+          $ref: '#/definitions/BookSchema'
+    examples:
+      - {"title": "Python Crash Cource", "author": "Eric Matthes", "pages": 560, "publisher": "No Starch Press"}
+  404:
+    description: Book not found
+    content:
+      application/json:
+        schema:
+          $ref: '#/definitions/BookNotFound'

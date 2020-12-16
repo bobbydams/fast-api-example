@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Demo App</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css" />
+  </head>
+
+  <body>
+    <div id="app">
+      <section class="hero is-primary is-fullheight">
+        <div class="hero-body">
+          <div class="container">
+            <h1 class="title">Demo application</h1>
+            <h2 class="subtitle">Use the form below to create a new book</h2>
+            <form method="post">
+              <div class="field">
+                <div class="control">
+                  <input
+                    class="input"
+                    type="text"
+                    name="title"
+                    placeholder="Book title"
+                  />
+                </div>
+              </div>
+              <div class="field">
+                <div class="control">
+                  <input
+                    class="input"
+                    type="text"
+                    name="author"
+                    placeholder="Book author"
+                  />
+                </div>
+              </div>
+              <div class="field">
+                <div class="control">
+                  <input
+                    class="input"
+                    type="text"
+                    name="publisher"
+                    placeholder="Book publisher"
+                  />
+                </div>
+              </div>
+              <div class="field">
+                <div class="control">
+                  <input
+                    class="input"
+                    type="number"
+                    name="pages"
+                    value="0"
+                    placeholder="Book pages"
+                  />
+                </div>
+              </div>
+              <button class="button" type="submit">Save Book</button>
+            </form>
+
+            <section class="pt-6">
+              <h2 class="subtitle">Get book by title</h2>
+              <form method="post">
+                <div class="field">
+                  <div class="control">
+                    <input
+                      class="input"
+                      type="text"
+                      name="get_by_title"
+                      placeholder="Book title"
+                    />
+                  </div>
+                </div>
+                <button class="button" type="submit">Get Book</button>
+              </form>
+            </section>
+
+            <section class="pt-6">
+              <div class="notification is-success">
+                <p>Results will appear here:</p>
+                <code> {{ response }} </code>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script src="https://unpkg.com/vue"></script>
+    <!-- Full bundle -->
+    <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
+
+    <!-- Individual components -->
+    <script src="https://unpkg.com/buefy/dist/components/table"></script>
+    <script src="https://unpkg.com/buefy/dist/components/input"></script>
+
+    <script>
+      new Vue({
+        el: "#app",
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+Log in to application
+---
+description: Post a request body
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        $ref: '#/definitions/Login'
+  required: true
+tags:
+  - auth
+definitions:
+  Login:
+    type: object
+    properties:
+      username:
+        type: string
+      password:
+        type: string
+  LoginSuccess:
+    type: object
+    properties:
+      access_token:
+        type: string
+        example: "1234"
+      refresh_token:
+        type: string
+        example: "1234"
+  LoginFailed:
+    type: object
+    properties:
+      code:
+        type: string
+        example: LOGIN_FAILED
+      message:
+        type: string
+        example: Username or password incorrect!
+responses:
+  200:
+    description: A successful login
+    content:
+      application/json:
+        schema:
+          $ref: '#/definitions/LoginSuccess'
+  401:
+    description: An unsuccessful login
+    content:
+      application/json:
+        schema:
+          $ref: '#/definitions/LoginFailed'

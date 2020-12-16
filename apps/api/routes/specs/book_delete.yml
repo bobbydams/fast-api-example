@@ -1,0 +1,25 @@
+Delete a single Book endpoint
+---
+tags:
+  - books
+parameters:
+  - name: title
+    in: path
+    required: true
+    schema:
+      type: string
+definitions:
+  SuccessSchema:
+    type: object
+    properties:
+      success:
+        type: boolean
+responses:
+  200:
+    description: The success response
+    content:
+      application/json:
+        schema:
+          $ref: '#/definitions/SuccessSchema'
+    examples:
+      - {"success": True}

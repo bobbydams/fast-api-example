@@ -1,0 +1,319 @@
+{
+	"info": {
+		"_postman_id": "e6f323ce-cbde-4465-adb0-91352e0e209c",
+		"name": "Flask Example",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Default",
+			"item": [
+				{
+					"name": "Index",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7f77854b-99a1-4ce5-a526-932a034f9dbf",
+								"exec": [
+									"let accessToken = pm.response.json().access_token",
+									"let refreshToken = pm.response.json().refresh_token",
+									"pm.environment.set(\"access_token\", accessToken)",
+									"pm.environment.set(\"refresh_token\", refreshToken)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"test\",\n    \"password\": \"test\"\n}"
+						},
+						"url": {
+							"raw": "http://{{host}}/login",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "901aacdb-e066-4b50-8cc9-92735a003d07",
+								"exec": [
+									"let accessToken = pm.response.json().access_token",
+									"pm.environment.set(\"access_token\", accessToken)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{refresh_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://{{host}}/refresh",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Books",
+			"item": [
+				{
+					"name": "Add Book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Some Book\",\n    \"author\": \"Some Author\",\n    \"publisher\": \"Some publisher\",\n    \"pages\": 100\n}"
+						},
+						"url": {
+							"raw": "http://{{host}}/book",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/book/Some%20Book",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"book",
+								"Some%20Book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Some Book\",\n    \"author\": \"Another Author\",\n    \"publisher\": \"Another Publisher\",\n    \"pages\": 0\n}"
+						},
+						"url": {
+							"raw": "http://{{host}}/book",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://{{host}}/book/Some%20Book",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"book",
+								"Some%20Book"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "5ed6b4e0-6d67-4271-89d8-a6cf5a77bf5c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "7ac4bab4-443b-4691-a6d8-61a8067d6c02",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "4b953f7b-fa52-4fd5-abe3-6e30eb01d64e",
+			"key": "host",
+			"value": ""
+		},
+		{
+			"id": "79213ac6-ca26-4afd-bb32-91386eda7856",
+			"key": "refresh_token",
+			"value": ""
+		},
+		{
+			"id": "00651e61-e161-44c0-afd9-efea8d1c343b",
+			"key": "access_token",
+			"value": ""
+		}
+	],
+	"protocolProfileBehavior": {}
+}
