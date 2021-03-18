@@ -4,7 +4,7 @@ from typing import Callable, Dict, Type
 from sqlalchemy.exc import IntegrityError
 
 from apps.api.domain import commands
-from apps.api.domain.exceptions import BookNotAdded, BookNotFound
+from apps.api.domain.exceptions import EntityNotAdded, EntityNotFound
 from apps.api.service_layer import unit_of_work
 
 
@@ -14,7 +14,7 @@ def add_book(command: commands.AddBook, uow: unit_of_work.AbstractUnitOfWork):
         try:
             uow.commit()
         except IntegrityError:
-            raise BookNotAdded("Book not added!")
+            raise EntityNotAdded("Book not added!")
     return True
 
 
@@ -23,7 +23,7 @@ def get_book(command: commands.GetBook, uow: unit_of_work.AbstractUnitOfWork):
         book = uow.books.get(title=command.title)
         if book:
             return book
-        raise BookNotFound(f"Book by title {command.title!r} not found!")
+        raise EntityNotFound(f"Book by title {command.title!r} not found!")
 
 
 def update_book(command: commands.UpdateBook, uow: unit_of_work.AbstractUnitOfWork):

@@ -1,7 +1,7 @@
 def get_auth_header(client, username="test", password="test"):
     response = client.post("/login", json=dict(username=username, password=password))
 
-    access_token = response.json["access_token"]
+    access_token = response.json()["access_token"]
 
     return {"Authorization": f"Bearer {access_token}"}
 
@@ -23,7 +23,7 @@ def test_index(client):
     response = client.get("/")
 
     assert response.status_code == 200
-    assert response.json["application"] == "Flask Example API"
+    assert response.json()["application"] == "Fast API Example API"
 
 
 def test_get_book(client):

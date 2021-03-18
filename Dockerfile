@@ -15,4 +15,4 @@ RUN apt-get clean \
 COPY . /code
 
 EXPOSE 8000
-CMD ["python", "-m", "uvicorn", "apps.api.app:app"]
+CMD ["python", "-m", "uvicorn", "apps.api.entrypoint:app"]
