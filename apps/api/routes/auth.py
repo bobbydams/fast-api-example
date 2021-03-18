@@ -1,18 +1,13 @@
-from flasgger.utils import swag_from
-from flask import request
-from flask_jwt_extended import (
-    create_access_token,
-    create_refresh_token,
-    get_jwt_identity,
-    jwt_refresh_token_required,
-)
+from fastapi import APIRouter
 
-from apps.api.app import bp
+from apps.api.context import Context
+
+context = Context()
+router = APIRouter()
 
 
-@bp.route('/login', methods=['POST'])
-@swag_from('specs/login_post.yml', methods=['POST'])
-def login():
+@router.post("/login")
+async def login():
     if not request.is_json:
         return {"message": "Missing JSON in request"}, 400
 

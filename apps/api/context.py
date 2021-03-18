@@ -5,6 +5,7 @@ import os
 from dotenv import load_dotenv
 
 from apps.api.adapters import orm
+from apps.api.domain.exceptions import ConfigurationError
 from apps.api import config
 from apps.api.service_layer import handlers, messagebus, unit_of_work
 
@@ -34,7 +35,7 @@ class Context:
     def load(self):
         self.logger = logging.getLogger(__name__)
 
-        self.load_uow("inmemory")
+        self.load_uow()
 
         dependencies = {'uow': self.uow}
 
@@ -48,8 +49,8 @@ class Context:
             command_handlers=injected_command_handlers,
         )
 
-    def load_uow(self, default):
-        self.uow = self._load_uow(os.getenv('BOOK_REPOSITORY_BACKEND', default))
+    def load_uow(self):
+        self.uow = self._load_uow(os.getenv('BOOK_REPOSITORY_BACKEND'))
 
     def _load_uow(self, backend):
         self.logger.info(f"Loading {backend!r} UnitOfWork")
@@ -64,9 +65,12 @@ class Context:
             )
             orm.metadata.create_all(engine)
             return SqlAlchemyUnitOfWork()
-        from apps.api.service_layer.unit_of_work import InMemoryUnitOfWork
+        elif backend == "in-memory":
+            from apps.api.service_layer.unit_of_work import InMemoryUnitOfWork
 
-        return InMemoryUnitOfWork()
+            return InMemoryUnitOfWork()
+
+        raise ConfigurationError(f'Backend {backend!r} not valid!')
 
     def _inject_dependencies(self, handler, dependencies):
         params = inspect.signature(handler).parameters

@@ -1,5 +1,6 @@
-import pytest
+import sqlite3
 
+import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -15,14 +16,16 @@ def init_mock_data(session):
 
 @pytest.fixture
 def client():
-    from apps.api.app import app
+    from apps.api.entrypoint import app
 
     yield TestClient(app)
 
 
 @pytest.fixture
 def in_memory_sqlite_db():
-    engine = create_engine('sqlite:///:memory:')
+    DB_URI = "file::memory:?cache=shared"
+    creator = lambda: sqlite3.connect(DB_URI, uri=True)
+    engine = create_engine("sqlite:///:memory:", creator=creator)
     orm.metadata.drop_all(engine)
     orm.metadata.create_all(engine)
     yield engine

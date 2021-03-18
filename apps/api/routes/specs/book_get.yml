@@ -20,7 +20,7 @@ definitions:
         type: integer
       publisher:
         type: string
-  BookNotFound:
+  EntityNotFound:
     type: object
     properties:
       code:
@@ -43,4 +43,4 @@ responses:
     content:
       application/json:
         schema:
-          $ref: '#/definitions/BookNotFound'
+          $ref: '#/definitions/EntityNotFound'
